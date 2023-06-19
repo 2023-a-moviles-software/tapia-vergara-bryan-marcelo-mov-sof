@@ -4,7 +4,7 @@ import models.Client
 import java.io.File
 
 class ClientDAO {
-    private var file: File = File("src/main/data/clients.txt").also {
+    private var file: File = File("src/main/kotlin/data/clients.txt").also {
         if (!it.exists()){
             it.createNewFile()
         }
@@ -52,11 +52,14 @@ class ClientDAO {
     }
 
     fun create(client: Client){
-        val lastId = file.readLines().last().split(",")[0].toInt()
-        if(lastId != null ){
-            client.setId(lastId+1)
-        }else{
-            client.setId(0)
+        when {
+            file.readText() == "" -> {
+                client.setId(0)
+            }
+            else -> {
+                val lastId = file.readLines().last().split(",")[0].toInt()
+                client.setId(lastId+1)
+            }
         }
         file.appendText(client.toString() + "\n")
     }
@@ -81,12 +84,16 @@ class ClientDAO {
         return true
     }
 
-    fun delete(id: Int){
+    fun delete(id: Int): Boolean{
+        if (getById(id) == null){
+            return false
+        }
         val clients: String = file.readLines()
             .filter { it.split(",")[0].toInt() != id }
             .joinToString("\n", postfix = "\n")
-            //.also { file.writeText(it) }
+        //.also { file.writeText(it) }
         file.writeText(clients)
+        return true
     }
 
 

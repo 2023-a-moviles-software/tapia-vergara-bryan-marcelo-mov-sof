@@ -5,7 +5,7 @@ import java.io.File
 import java.time.LocalDate
 
 class PaymentDAO {
-    private var file: File = File("src/main/data/payments.txt").also {
+    private var file: File = File("src/main/kotlin/data/payments.txt").also {
         if (!it.exists()){
             it.createNewFile()
         }
@@ -50,12 +50,14 @@ class PaymentDAO {
                     ClientDAO.getInstance().getById(paymentSplit[6].toInt())
                 )
             }
-            return null
         }
         return null
     }
 
-    fun getPaymentByClient(idClient: Int): ArrayList<Payment>{
+    fun getPaymentByClient(idClient: Int): ArrayList<Payment>? {
+        if (ClientDAO.getInstance().getById(idClient) == null){
+            return null
+        }
         val payments: ArrayList<Payment> = ArrayList()
         file.readLines().forEach {
             val paymentSplit = it.split(",")
@@ -76,6 +78,7 @@ class PaymentDAO {
     }
 
     fun create(payment: Payment){
+
         val lastId = file.readLines().last().split(",")[0].toInt()
         if(lastId != null ){
             payment.setId(lastId+1)
@@ -104,11 +107,15 @@ class PaymentDAO {
         return true
     }
 
-    fun delete(id: Int){
+    fun delete(id: Int): Boolean{
+        if (getById(id) == null){
+            return false
+        }
         val payments: String = file.readLines()
             .filter { it.split(",")[0].toInt() != id }
             .joinToString("\n", postfix = "\n")
         //.also { file.writeText(it) }
         file.writeText(payments)
+        return true
     }
 }
