@@ -1,7 +1,7 @@
 package models
 
 class Client (
-    private val id: Int,
+    private var id: Int?,
     private var identificationCard: String,
     private var name: String,
     private var phone: String,
@@ -9,41 +9,38 @@ class Client (
     private var isPreferential: Boolean = false,
     //private var payments: ArrayList<Payment>? = null
 ){
-    constructor() : this(-1,"", "", "", "", false)
+    constructor() : this(null,"", "", "", "", false)
 
     constructor(
-        id: Int,
+        id: Int?,
         identificationCard: String,
         name: String,
         phone: String,
         residence: String,
         isPreferentialCode: Int,
-        payments: ArrayList<Payment>
-    ) : this(id,identificationCard, name, phone, residence, isPreferentialCode != 0) {
+    ) : this(id,identificationCard, name, phone, residence, isPreferentialCode != 0)
 
-    }
-
-    public fun getId(): Int{
+    fun getId(): Int? {
         return id
     }
 
-    public fun getIdentificationCard(): String{
+    fun getIdentificationCard(): String{
         return identificationCard
     }
 
-    public fun getName():String{
+    fun getName():String{
         return name
     }
 
-    public fun getPhone():String{
+    fun getPhone():String{
         return phone
     }
 
-    public fun getResidence():String{
+    fun getResidence():String{
         return residence
     }
 
-    public fun getIsPreferential():Boolean{
+    fun getIsPreferential():Boolean{
         return isPreferential
     }
     /*
@@ -55,23 +52,27 @@ class Client (
         this.payments?.add(payment)
     }*/
 
-    public fun setIdentificationCard(identificationCard: String){
+    fun setId(id: Int){
+        this.id = id
+    }
+
+    fun setIdentificationCard(identificationCard: String){
         this.identificationCard = identificationCard
     }
 
-    public fun setName(name: String){
+    fun setName(name: String){
         this.name = name
     }
 
-    public fun setPhone(phone: String){
+    fun setPhone(phone: String){
         this.phone = phone
     }
 
-    public fun setResidence(residence: String){
+    fun setResidence(residence: String){
         this.residence = residence
     }
 
-    public fun setIsPreferential(isPreferential: Boolean){
+    fun setIsPreferential(isPreferential: Boolean){
         this.isPreferential = isPreferential
     }
 
