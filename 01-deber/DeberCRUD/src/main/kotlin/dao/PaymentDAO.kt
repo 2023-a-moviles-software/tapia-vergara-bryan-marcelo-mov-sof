@@ -103,11 +103,15 @@ class PaymentDAO {
         }
 
         payments.set(index, payment)
-
+        var i = 0
         payments.forEach {
-            strPayments+=it.toString() + "\n"
+            if(i == 0){
+                strPayments+=it.toString()
+            }else{
+                strPayments+="\n" + it.toString()
+            }
+            i++
         }
-        strPayments.removeSuffix("\n")
         file.writeText(strPayments)
     }
 

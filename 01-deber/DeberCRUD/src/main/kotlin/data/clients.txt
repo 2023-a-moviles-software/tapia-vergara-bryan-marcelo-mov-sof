@@ -1,2 +1,3 @@
-0,1727628362,Bryan Tapia,0958881256,Quito,true
+0,1727628362,Marcelo Tapia,0958881256,Sangolqui,false
 1,1003546486,Mateo Pérez,0986530301,Quito,false
+2,1727628362,Emilio Montalvo,0983045958,Quito,false

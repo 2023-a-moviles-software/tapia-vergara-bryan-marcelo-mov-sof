@@ -78,11 +78,15 @@ class ClientDAO {
         }
 
         clients.set(index, client)
-
+        var i = 0
         clients.forEach {
-            strClients+=it.toString() + "\n"
+            if(i == 0){
+                strClients+=it.toString()
+            }else{
+                strClients+="\n" + it.toString()
+            }
+            i++
         }
-        strClients.removeSuffix("\n")
         file.writeText(strClients)
     }
 
