@@ -15,15 +15,6 @@ class Payment (
     private var client: Client
 ) {
     constructor() : this(null, "", LocalDate.now(), 0.0, true, false, Client())
-    constructor(
-        id: Int,
-        month: String,
-        date: LocalDate,
-        amount: Double,
-        inCashCode: Int,
-        isLateCode: Int,
-        client: Client
-    ) : this(id,month, date, amount, inCashCode != 0, isLateCode!= 0, client)
 
     fun getId(): Int? {
         return id

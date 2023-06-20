@@ -6,19 +6,9 @@ class Client (
     private var name: String,
     private var phone: String,
     private var residence: String,
-    private var isPreferential: Boolean,
-    //private var payments: ArrayList<Payment>? = null
+    private var isPreferential: Boolean
 ){
     constructor() : this(null,"", "", "", "", false)
-
-    constructor(
-        id: Int?,
-        identificationCard: String,
-        name: String,
-        phone: String,
-        residence: String,
-        isPreferentialCode: Int,
-    ) : this(id,identificationCard, name, phone, residence, isPreferentialCode != 0)
 
     fun getId(): Int? {
         return id

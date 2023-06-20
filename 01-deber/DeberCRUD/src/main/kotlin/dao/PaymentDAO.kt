@@ -78,15 +78,6 @@ class PaymentDAO {
     }
 
     fun create(payment: Payment){
-
-        /*val lastId = file.readLines().last().split(",")[0].toInt()
-        if(lastId != null ){
-            payment.setId(lastId+1)
-        }else{
-            payment.setId(0)
-        }
-        file.appendText(payment.toString() + "\n")*/
-
         when {
             file.readText() == "" -> {
                 payment.setId(0)
@@ -118,22 +109,6 @@ class PaymentDAO {
         }
         strPayments.removeSuffix("\n")
         file.writeText(strPayments)
-
-        /*
-        val payments: ArrayList<Payment> = getAll()
-        var strPayments = ""
-        payments.forEach {
-            if(it.getId() == payment.getId()){
-                it.setMonth(payment.getMonth())
-                it.setDate(payment.getDate()!!)
-                it.setAmount(payment.getAmount())
-                it.setInCash(payment.getInCash())
-                it.setIsLate(payment.getIsLate())
-                it.setClient(payment.getClient()!!)
-            }
-            strPayments+=it.toString() + "\n"
-        }
-        file.writeText(strPayments)*/
     }
 
     fun delete(id: Int): Boolean{
