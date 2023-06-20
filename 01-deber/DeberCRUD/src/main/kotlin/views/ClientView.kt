@@ -10,13 +10,15 @@ class ClientView {
 
     private fun displayMenu() {
         var flag = true
-        val menu = "\nSeleccione una opción:\n" +
+        val menu = "\nMenú de Cliente:\n" +
                 "1. Listar todos los clientes\n" +
                 "2. Crear un cliente\n" +
                 "3. Actualizar un cliente\n" +
                 "4. Buscar un cliente\n" +
                 "5. Eliminar un cliente\n" +
-                "6. Regresar al menú principal"
+                "6. Regresar al menú principal\n" +
+                "7. Salir\n" +
+                "Seleccione una opción:"
         do {
             println(menu)
             val option = readln().toInt()
@@ -111,14 +113,13 @@ class ClientView {
                 6 -> {
                     MainView()
                 }
+                7 -> {
+                    flag = false
+                }
                 else -> {
                     println("Opción no válida, escoge otra.")
                 }
             }
         }while (flag)
-
-
-
-
     }
 }

@@ -1,0 +1,2 @@
+0,Enero,2022-01-10,12.5,false,true,0
+1,Marzo,2020-10-21,80.0,false,false,0

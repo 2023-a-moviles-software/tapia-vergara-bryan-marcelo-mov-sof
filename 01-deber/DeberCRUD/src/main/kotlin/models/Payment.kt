@@ -8,13 +8,13 @@ import java.time.Year
 class Payment (
     private var id: Int?,
     private var month: String,
-    private var date: LocalDate?,
+    private var date: LocalDate,
     private var amount: Double,
-    private var inCash: Boolean = true,
-    private var isLate: Boolean = false,
-    private var client: Client?
+    private var inCash: Boolean,
+    private var isLate: Boolean,
+    private var client: Client
 ) {
-    constructor() : this(null, "", null, 0.0, true, false, null)
+    constructor() : this(null, "", LocalDate.now(), 0.0, true, false, Client())
     constructor(
         id: Int,
         month: String,
@@ -33,7 +33,7 @@ class Payment (
         return month
     }
 
-    fun getDate(): LocalDate? {
+    fun getDate(): LocalDate {
         return date
     }
 
@@ -49,7 +49,7 @@ class Payment (
         return isLate
     }
 
-    fun getClient(): Client? {
+    fun getClient(): Client {
         return client
     }
 
@@ -82,7 +82,7 @@ class Payment (
     }
 
     override fun toString(): String {
-        return "$id,$month,$date,$amount,$inCash,$isLate,${client?.getId()}"
+        return "$id,$month,$date,$amount,$inCash,$isLate,${client.getId()}"
     }
 
     fun toPrint(): String{
@@ -94,6 +94,6 @@ class Payment (
         if (isLate){
             late = "Sí"
         }
-        return "$id\t$month\t$date\t$amount\t$cash\t$late\t${client?.getName()}"
+        return "$id\t$month\t$date\t$amount\t$cash\t$late\t${client.getName()}"
     }
 }

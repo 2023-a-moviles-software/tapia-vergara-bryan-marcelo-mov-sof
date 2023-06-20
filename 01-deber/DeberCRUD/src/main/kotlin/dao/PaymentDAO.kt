@@ -29,7 +29,7 @@ class PaymentDAO {
                 paymentSplit[3].toDouble(),
                 paymentSplit[4].toBoolean(),
                 paymentSplit[5].toBoolean(),
-                ClientDAO.getInstance().getById(paymentSplit[6].toInt())
+                ClientDAO.getInstance().getById(paymentSplit[6].toInt())!!
             )
             payments.add(payment)
         }
@@ -47,15 +47,15 @@ class PaymentDAO {
                     paymentSplit[3].toDouble(),
                     paymentSplit[4].toBoolean(),
                     paymentSplit[5].toBoolean(),
-                    ClientDAO.getInstance().getById(paymentSplit[6].toInt())
+                    ClientDAO.getInstance().getById(paymentSplit[6].toInt())!!
                 )
             }
         }
         return null
     }
 
-    fun getPaymentByClient(idClient: Int): ArrayList<Payment>? {
-        if (ClientDAO.getInstance().getById(idClient) == null){
+    fun getByClient(idClient: Int): ArrayList<Payment>? {
+        if (!ClientDAO.getInstance().exists(idClient)){
             return null
         }
         val payments: ArrayList<Payment> = ArrayList()
@@ -69,7 +69,7 @@ class PaymentDAO {
                     paymentSplit[3].toDouble(),
                     paymentSplit[4].toBoolean(),
                     paymentSplit[5].toBoolean(),
-                    ClientDAO.getInstance().getById(paymentSplit[6].toInt())
+                    ClientDAO.getInstance().getById(paymentSplit[6].toInt())!!
                 )
                 payments.add(payment)
             }
