@@ -2,7 +2,7 @@ package views
 
 import dao.ClientDAO
 
-class MainView {
+class MenuView {
     init {
         displayMenu()
     }

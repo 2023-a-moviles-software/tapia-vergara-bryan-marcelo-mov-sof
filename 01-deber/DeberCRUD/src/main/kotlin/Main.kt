@@ -1,6 +1,6 @@
-import views.MainView
+import views.MenuView
 import java.time.LocalDate
 
 fun main(args: Array<String>) {
-    MainView()
+    MenuView()
 }

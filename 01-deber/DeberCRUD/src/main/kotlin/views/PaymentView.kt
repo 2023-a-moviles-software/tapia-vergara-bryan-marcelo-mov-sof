@@ -171,7 +171,7 @@ class PaymentView {
                     }
                 }
                 7 -> {
-                    MainView()
+                    MenuView()
                 }
                 8 -> {
                     flag = false

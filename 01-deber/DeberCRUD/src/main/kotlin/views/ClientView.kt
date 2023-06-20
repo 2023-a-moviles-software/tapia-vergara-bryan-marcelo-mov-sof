@@ -111,7 +111,7 @@ class ClientView {
                     }
                 }
                 6 -> {
-                    MainView()
+                    MenuView()
                 }
                 7 -> {
                     flag = false
