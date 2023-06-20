@@ -55,45 +55,57 @@ class ClientDAO {
         when {
             file.readText() == "" -> {
                 client.setId(0)
+                file.appendText(client.toString())
             }
             else -> {
                 val lastId = file.readLines().last().split(",")[0].toInt()
                 client.setId(lastId+1)
+                file.appendText("\n" + client.toString())
             }
         }
-        file.appendText(client.toString() + "\n")
+
     }
 
-    fun update(client: Client): Boolean {
-        //delete(client.getId())
-        //file.appendText(client.toString() + "\n")
-        file.readLines().find { it.split(",")[0].toInt() == client.getId() } ?: return false
-        val clients: ArrayList<Client> = getAll()
+    fun update(client: Client){
+        var clients: ArrayList<Client> = getAll()
+        var index = -1
         var strClients = ""
+
         clients.forEach {
             if(it.getId() == client.getId()){
-                it.setIdentificationCard(client.getIdentificationCard())
-                it.setName(client.getName())
-                it.setPhone(client.getPhone())
-                it.setResidence(client.getResidence())
-                it.setIsPreferential(client.getIsPreferential())
+                index = clients.indexOf(it)
             }
+        }
+
+        clients.set(index, client)
+
+        clients.forEach {
             strClients+=it.toString() + "\n"
         }
+        strClients.removeSuffix("\n")
         file.writeText(strClients)
-        return true
     }
 
     fun delete(id: Int): Boolean{
-        if (getById(id) == null){
+        if (!exists(id)){
             return false
         }
         val clients: String = file.readLines()
             .filter { it.split(",")[0].toInt() != id }
-            .joinToString("\n", postfix = "\n")
+            .joinToString("\n")
         //.also { file.writeText(it) }
         file.writeText(clients)
         return true
+    }
+
+    fun exists(id: Int): Boolean{
+        file.readLines().forEach {
+            val client = it.split(",")[0].toInt()
+            if (client == id) {
+                return true
+            }
+        }
+        return false
     }
 
 

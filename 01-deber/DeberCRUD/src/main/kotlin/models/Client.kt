@@ -6,7 +6,7 @@ class Client (
     private var name: String,
     private var phone: String,
     private var residence: String,
-    private var isPreferential: Boolean = false,
+    private var isPreferential: Boolean,
     //private var payments: ArrayList<Payment>? = null
 ){
     constructor() : this(null,"", "", "", "", false)
@@ -77,8 +77,15 @@ class Client (
     }
 
     override fun toString(): String {
-        return "id=$id, identificationCard='$identificationCard', name='$name', phone='$phone', residence='$residence', isPreferential=$isPreferential"
+        return "$id,$identificationCard,$name,$phone,$residence,$isPreferential"
     }
 
+    fun toPrint(): String{
+        var preferential = "No"
+        if (isPreferential){
+            preferential = "Sí"
+        }
+        return "$id\t$identificationCard\t$name\t$phone\t$residence\t$preferential"
+    }
 
 }

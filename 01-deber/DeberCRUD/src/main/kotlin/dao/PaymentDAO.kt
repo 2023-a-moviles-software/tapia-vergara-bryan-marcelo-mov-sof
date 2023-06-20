@@ -79,17 +79,47 @@ class PaymentDAO {
 
     fun create(payment: Payment){
 
-        val lastId = file.readLines().last().split(",")[0].toInt()
+        /*val lastId = file.readLines().last().split(",")[0].toInt()
         if(lastId != null ){
             payment.setId(lastId+1)
         }else{
             payment.setId(0)
         }
-        file.appendText(payment.toString() + "\n")
+        file.appendText(payment.toString() + "\n")*/
+
+        when {
+            file.readText() == "" -> {
+                payment.setId(0)
+                file.appendText(payment.toString())
+            }
+            else -> {
+                val lastId = file.readLines().last().split(",")[0].toInt()
+                payment.setId(lastId+1)
+                file.appendText("\n" + payment.toString())
+            }
+        }
     }
 
-    fun update(payment: Payment): Boolean {
-        file.readLines().find { it.split(",")[0].toInt() == payment.getId() } ?: return false
+    fun update(payment: Payment){
+        var payments: ArrayList<Payment> = getAll()
+        var index = -1
+        var strPayments = ""
+
+        payments.forEach {
+            if(it.getId() == payment.getId()){
+                index = payments.indexOf(it)
+            }
+        }
+
+        payments.set(index, payment)
+
+        payments.forEach {
+            strPayments+=it.toString() + "\n"
+        }
+        strPayments.removeSuffix("\n")
+        file.writeText(strPayments)
+
+        /*
         val payments: ArrayList<Payment> = getAll()
         var strPayments = ""
         payments.forEach {
@@ -103,19 +133,28 @@ class PaymentDAO {
             }
             strPayments+=it.toString() + "\n"
         }
-        file.writeText(strPayments)
-        return true
+        file.writeText(strPayments)*/
     }
 
     fun delete(id: Int): Boolean{
-        if (getById(id) == null){
+        if (!exists(id)){
             return false
         }
         val payments: String = file.readLines()
             .filter { it.split(",")[0].toInt() != id }
-            .joinToString("\n", postfix = "\n")
+            .joinToString("\n")
         //.also { file.writeText(it) }
         file.writeText(payments)
         return true
+    }
+
+    fun exists(id: Int): Boolean{
+        file.readLines().forEach {
+            val payment = it.split(",")[0].toInt()
+            if (payment == id) {
+                return true
+            }
+        }
+        return false
     }
 }

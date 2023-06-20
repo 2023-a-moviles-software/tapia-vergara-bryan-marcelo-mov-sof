@@ -84,4 +84,16 @@ class Payment (
     override fun toString(): String {
         return "$id,$month,$date,$amount,$inCash,$isLate,${client?.getId()}"
     }
+
+    fun toPrint(): String{
+        var cash = "No"
+        var late = "No"
+        if (inCash){
+            cash = "Sí"
+        }
+        if (isLate){
+            late = "Sí"
+        }
+        return "$id\t$month\t$date\t$amount\t$cash\t$late\t${client?.getName()}"
+    }
 }
