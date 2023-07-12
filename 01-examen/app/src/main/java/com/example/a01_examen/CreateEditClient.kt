@@ -27,31 +27,31 @@ class CreateEditClient : AppCompatActivity() {
         if (create){
             buttonCreateEditClient.setOnClickListener {
                 val client = Client()
-                client.setName(name.text.toString())
-                client.setIdentificationCard(idCard.text.toString())
-                client.setPhone(phone.text.toString())
-                client.setResidence(residence.text.toString())
-                client.setIsPreferential(preferential.isChecked)
+                client.name = name.text.toString()
+                client.identificationCard = idCard.text.toString()
+                client.phone = phone.text.toString()
+                client.residence = residence.text.toString()
+                client.isPreferential = preferential.isChecked
 
                 ClientDAO.getInstance().create(client)
                 finish()
             }
         }else{
-            val client = ClientDAO.getInstance().getAll()[intent.getIntExtra("idClient", 0)]
-            tittle.text = "Editar el cliente: ${client.getName()}"
+            val client = ClientDAO.getInstance().getAll()[intent.getIntExtra("idItemSelected", 0)]
+            tittle.text = "Editar el cliente: ${client.name}"
             buttonCreateEditClient.text = "Actualizar"
-            name.setText(client.getName())
-            idCard.setText(client.getIdentificationCard())
-            phone.setText(client.getPhone())
-            residence.setText(client.getResidence())
-            preferential.isChecked = client.getIsPreferential()
+            name.setText(client.name)
+            idCard.setText(client.identificationCard)
+            phone.setText(client.phone)
+            residence.setText(client.residence)
+            preferential.isChecked = client.isPreferential
 
             buttonCreateEditClient.setOnClickListener {
-                client.setName(name.text.toString())
-                client.setIdentificationCard(idCard.text.toString())
-                client.setPhone(phone.text.toString())
-                client.setResidence(residence.text.toString())
-                client.setIsPreferential(preferential.isChecked)
+                client.name = name.text.toString()
+                client.identificationCard = idCard.text.toString()
+                client.phone = phone.text.toString()
+                client.residence = residence.text.toString()
+                client.isPreferential = preferential.isChecked
 
                 ClientDAO.getInstance().update(client)
                 finish()

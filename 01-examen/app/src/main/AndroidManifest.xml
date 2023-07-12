@@ -13,6 +13,9 @@
         android:theme="@style/Theme.01examen"
         tools:targetApi="31">
         <activity
+            android:name=".CreateEditPayment"
+            android:exported="false" />
+        <activity
             android:name=".PaymentsView"
             android:exported="false" />
         <activity

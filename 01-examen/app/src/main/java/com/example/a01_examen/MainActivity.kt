@@ -11,12 +11,11 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import com.example.a01_examen.DataBase.DataBaseMemory
+import com.example.a01_examen.database.DataBaseMemory
 import com.example.a01_examen.dao.ClientDAO
 import com.example.a01_examen.models.Client
 
 class MainActivity : AppCompatActivity() {
-    val clients = DataBaseMemory.clients
     var idItemSelected = 0
 
     lateinit var listViewClients: ListView
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            clients
+            ClientDAO.getInstance().getAll()
         )
         listViewClients.adapter = adapter
         adapter.notifyDataSetChanged()
@@ -61,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.mi_client_edit ->{
-                "Hacer algo con ${idItemSelected}"
                 openActivityCreateEdit(CreateEditClient::class.java, false)
                 return true
             }
@@ -103,9 +101,9 @@ class MainActivity : AppCompatActivity() {
     fun deleteDialog(){
         val builder = AlertDialog.Builder(this)
         val client = ClientDAO.getInstance().getAll()[idItemSelected]
-        builder.setTitle("¿Desea eliminar el cliente ${client.getName()}?")
+        builder.setTitle("¿Desea eliminar el cliente ${client.name}?")
         builder.setPositiveButton("Aceptar") { dialog, which ->
-            ClientDAO.getInstance().delete(client.getId()!!)
+            ClientDAO.getInstance().delete(client.id!!)
             adapter.notifyDataSetChanged()
         }
         builder.setNegativeButton("Cancelar", null)
