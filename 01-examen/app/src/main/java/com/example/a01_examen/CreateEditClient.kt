@@ -1,6 +1,5 @@
 package com.example.a01_examen
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -21,7 +20,7 @@ class CreateEditClient : AppCompatActivity() {
         val name = findViewById<EditText>(R.id.txt_client_name)
         val idCard = findViewById<EditText>(R.id.txt_client_id_card)
         val phone = findViewById<EditText>(R.id.txt_client_phone)
-        val residence = findViewById<EditText>(R.id.txt_client_id_card)
+        val residence = findViewById<EditText>(R.id.txt_client_residence)
         val preferential = findViewById<CheckBox>(R.id.cb_client_preferential)
         val buttonCreateEditClient = findViewById<Button>(R.id.btn_create_edit_client)
 
@@ -38,8 +37,25 @@ class CreateEditClient : AppCompatActivity() {
                 finish()
             }
         }else{
-            tittle.setText("Editar ")
-            buttonCreateEditClient.setText("Actualizar")
+            val client = ClientDAO.getInstance().getAll()[intent.getIntExtra("idClient", 0)]
+            tittle.text = "Editar el cliente: ${client.getName()}"
+            buttonCreateEditClient.text = "Actualizar"
+            name.setText(client.getName())
+            idCard.setText(client.getIdentificationCard())
+            phone.setText(client.getPhone())
+            residence.setText(client.getResidence())
+            preferential.isChecked = client.getIsPreferential()
+
+            buttonCreateEditClient.setOnClickListener {
+                client.setName(name.text.toString())
+                client.setIdentificationCard(idCard.text.toString())
+                client.setPhone(phone.text.toString())
+                client.setResidence(residence.text.toString())
+                client.setIsPreferential(preferential.isChecked)
+
+                ClientDAO.getInstance().update(client)
+                finish()
+            }
         }
     }
 }

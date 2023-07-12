@@ -9,8 +9,8 @@
     <EditText
         android:id="@+id/txt_client_name"
         android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="368dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="432dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
@@ -25,16 +25,16 @@
         android:text="Crear"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintVertical_bias="0.877" />
 
     <EditText
         android:id="@+id/txt_client_id_card"
         android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="Cédula"
         android:inputType="number"
@@ -46,8 +46,8 @@
     <EditText
         android:id="@+id/txt_client_phone"
         android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="130dp"
         android:ems="10"
         android:hint="Teléfono"
         android:inputType="phone"
@@ -58,8 +58,8 @@
     <EditText
         android:id="@+id/txt_client_residence"
         android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="170dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="220dp"
         android:ems="10"
         android:hint="Domicilio"
         android:inputType="text"
@@ -81,10 +81,50 @@
         android:id="@+id/txt_client_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="70dp"
         android:text="Crear un cliente"
         app:layout_constraintBottom_toTopOf="@+id/txt_client_name"
         app:layout_constraintEnd_toEndOf="@+id/txt_client_name"
         app:layout_constraintStart_toStartOf="@+id/txt_client_name" />
+
+    <TextView
+        android:id="@+id/tv_client_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        app:layout_constraintBottom_toTopOf="@+id/txt_client_name"
+        app:layout_constraintEnd_toEndOf="@+id/txt_client_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_client_name" />
+
+    <TextView
+        android:id="@+id/tv_client_id_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cédula"
+        app:layout_constraintBottom_toTopOf="@+id/txt_client_id_card"
+        app:layout_constraintEnd_toEndOf="@+id/txt_client_id_card"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_client_id_card" />
+
+    <TextView
+        android:id="@+id/tv_client_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teléfono"
+        app:layout_constraintBottom_toTopOf="@+id/txt_client_phone"
+        app:layout_constraintEnd_toEndOf="@+id/txt_client_phone"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_client_phone" />
+
+    <TextView
+        android:id="@+id/tv_client_residence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Domicilio"
+        app:layout_constraintBottom_toTopOf="@+id/txt_client_residence"
+        app:layout_constraintEnd_toEndOf="@+id/txt_client_residence"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_client_residence" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
