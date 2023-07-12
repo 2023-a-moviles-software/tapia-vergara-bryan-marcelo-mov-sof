@@ -1,5 +1,6 @@
 package com.example.a01_examen
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +11,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.a01_examen.DataBase.DataBaseMemory
 
 class MainActivity : AppCompatActivity() {
     val clients = DataBaseMemory.clients
     var idItemSelected = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
-        //Obtener el id del ArrayList seleccionado
+        //Get ID of selected client
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
         idItemSelected = info.position
     }
@@ -69,6 +72,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //Adapter for Clients ListView
+        val listViewClients = findViewById<ListView>(R.id.lv_clients)
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            clients
+        )
+        listViewClients.adapter = adapter
+        adapter.notifyDataSetChanged()
+    }
+
     fun openActivity(
         classToOpen: Class<*>
     ){
@@ -83,6 +99,7 @@ class MainActivity : AppCompatActivity() {
     ){
         val intent = Intent(this, classToOpen)
         intent.putExtra("create", create)
+        intent.putExtra("idSelected", idSelected)
         startActivity(intent)
     }
 }
