@@ -123,6 +123,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
         android:text="Crear Cliente"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txt_client_name"
         app:layout_constraintEnd_toEndOf="@+id/txt_client_name"
         app:layout_constraintStart_toStartOf="@+id/txt_client_name" />

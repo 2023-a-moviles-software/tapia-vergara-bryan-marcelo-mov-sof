@@ -13,6 +13,14 @@ class Payment(
     constructor() : this(null, "", LocalDate.now(), 0.0, true, false)
 
     override fun toString(): String {
-        return "$id,$month,$date,$amount,$inCash,$isLate"
+        var cash = "Tarjeta"
+        var late = "A tiempo"
+        if (inCash){
+            cash = "Efectivo"
+        }
+        if (isLate){
+            late = "Atrasado"
+        }
+        return "$id - $month - $date - $amount - $cash - $late"
     }
 }

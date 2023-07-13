@@ -14,6 +14,10 @@ class Client(
     constructor() : this(null,"", "", "", "", false)
 
     override fun toString(): String {
-        return "$id,$identificationCard,$name,$phone,$residence,$isPreferential"
+        var preferential = "No preferencial"
+        if (isPreferential){
+            preferential = "Preferencial"
+        }
+        return "$id - $identificationCard - $name - $phone - $residence - $preferential"
     }
 }

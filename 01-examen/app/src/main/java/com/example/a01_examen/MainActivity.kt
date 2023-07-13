@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import com.example.a01_examen.database.DataBaseMemory
 import com.example.a01_examen.dao.ClientDAO
 import com.example.a01_examen.models.Client
 

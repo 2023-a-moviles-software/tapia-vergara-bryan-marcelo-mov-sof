@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
         android:text="Pagos"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/lv_payments"
         app:layout_constraintEnd_toEndOf="@+id/lv_payments"
         app:layout_constraintStart_toStartOf="@+id/lv_payments" />
