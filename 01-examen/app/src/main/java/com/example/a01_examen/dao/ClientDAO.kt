@@ -18,26 +18,26 @@ class ClientDAO {
     }
 
     fun getById(id: Int): Client? {
-        return DataBaseMemory.clients.find { it.getId() == id }
+        return DataBaseMemory.clients.find { it.id == id }
     }
 
     fun create(client: Client){
         if (DataBaseMemory.clients.isEmpty()){
-            client.setId(0)
+            client.id = 0
         }else{
-            val lastId = DataBaseMemory.clients.last().getId()?.plus(1)
-            client.setId(lastId!!)
+            val lastId = DataBaseMemory.clients.last().id?.plus(1)
+            client.id = lastId
         }
         DataBaseMemory.clients.add(client)
     }
 
     fun update(client: Client){
-        val clientUpdated = getById(client.getId()!!)
-        clientUpdated?.setIdentificationCard(client.getIdentificationCard())
-        clientUpdated?.setName(client.getName())
-        clientUpdated?.setPhone(client.getPhone())
-        clientUpdated?.setResidence(client.getResidence())
-        clientUpdated?.setIsPreferential(client.getIsPreferential())
+        val clientUpdated = getById(client.id!!)
+        clientUpdated!!.identificationCard = client.identificationCard
+        clientUpdated.name = client.name
+        clientUpdated.phone = client.phone
+        clientUpdated.residence = client.residence
+        clientUpdated.isPreferential = client.isPreferential
     }
 
     fun delete(id: Int): Boolean{

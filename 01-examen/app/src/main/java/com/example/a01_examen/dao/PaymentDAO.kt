@@ -13,34 +13,33 @@ class PaymentDAO {
 
     fun getAllByClient(idClient: Int): ArrayList<Payment>{
         val client = ClientDAO.getInstance().getById(idClient)
-        return client!!.getPayments()
+        return client!!.payments
     }
 
     fun getById(id: Int, idClient: Int): Payment? {
         val payments = getAllByClient(idClient)
-        return payments.find { it.getId() == id }
+        return payments.find { it.id == id }
     }
 
     fun create(payment: Payment, idClient: Int){
         val payments = getAllByClient(idClient)
         if (payments.isEmpty()){
-            payment.setId(0)
+            payment.id = 0
         }else{
-            val lastId = payments.last().getId()?.plus(1)
-            payment.setId(lastId!!)
+            val lastId = payments.last().id?.plus(1)
+            payment.id = lastId
         }
 
         payments.add(payment)
     }
 
     fun update(payment: Payment, idClient: Int){
-        val paymentUpdated = getById(payment.getId()!!, idClient)
-        paymentUpdated?.setMonth(payment.getMonth())
-        paymentUpdated?.setDate(payment.getDate())
-        paymentUpdated?.setAmount(payment.getAmount())
-        paymentUpdated?.setInCash(payment.getInCash())
-        paymentUpdated?.setIsLate(payment.getIsLate())
-
+        val paymentUpdated = getById(payment.id!!, idClient)
+        paymentUpdated!!.month = payment.month
+        paymentUpdated.date = payment.date
+        paymentUpdated.amount = payment.amount
+        paymentUpdated.inCash = payment.inCash
+        paymentUpdated.isLate = payment.isLate
     }
 
     fun delete(id: Int, idClient: Int): Boolean{

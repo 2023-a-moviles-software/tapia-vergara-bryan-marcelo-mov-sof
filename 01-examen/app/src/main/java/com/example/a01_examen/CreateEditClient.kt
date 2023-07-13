@@ -16,13 +16,13 @@ class CreateEditClient : AppCompatActivity() {
 
         val create:Boolean = intent.getBooleanExtra("create", true)
 
-        val tittle = findViewById<TextView>(R.id.txt_client_tittle)
+        val title = findViewById<TextView>(R.id.tv_client_title)
         val name = findViewById<EditText>(R.id.txt_client_name)
         val idCard = findViewById<EditText>(R.id.txt_client_id_card)
         val phone = findViewById<EditText>(R.id.txt_client_phone)
         val residence = findViewById<EditText>(R.id.txt_client_residence)
         val preferential = findViewById<CheckBox>(R.id.cb_client_preferential)
-        val buttonCreateEditClient = findViewById<Button>(R.id.btn_create_edit_client)
+        val buttonCreateEditClient = findViewById<Button>(R.id.btn_client_create_edit)
 
         if (create){
             buttonCreateEditClient.setOnClickListener {
@@ -38,7 +38,7 @@ class CreateEditClient : AppCompatActivity() {
             }
         }else{
             val client = ClientDAO.getInstance().getAll()[intent.getIntExtra("idItemSelected", 0)]
-            tittle.text = "Editar el cliente: ${client.name}"
+            title.text = "Editar el cliente: ${client.name}"
             buttonCreateEditClient.text = "Actualizar"
             name.setText(client.name)
             idCard.setText(client.identificationCard)

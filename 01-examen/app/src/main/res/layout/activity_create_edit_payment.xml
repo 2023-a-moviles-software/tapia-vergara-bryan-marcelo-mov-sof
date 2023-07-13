@@ -6,4 +6,109 @@
     android:layout_height="match_parent"
     tools:context=".CreateEditPayment">
 
+    <Button
+        android:id="@+id/btn_payment_create_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875" />
+
+    <Spinner
+        android:id="@+id/sp_payment_month"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="410dp"
+        android:entries="@array/months"
+        app:layout_constraintBottom_toTopOf="@+id/btn_payment_create_edit"
+        app:layout_constraintEnd_toEndOf="@+id/btn_payment_create_edit"
+        app:layout_constraintStart_toStartOf="@+id/btn_payment_create_edit" />
+
+    <TextView
+        android:id="@+id/tv_payment_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mes"
+        app:layout_constraintBottom_toTopOf="@+id/sp_payment_month"
+        app:layout_constraintEnd_toEndOf="@+id/sp_payment_month"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/sp_payment_month" />
+
+    <TextView
+        android:id="@+id/tv_payment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:text="Crear un pago"
+        app:layout_constraintBottom_toTopOf="@+id/sp_payment_month"
+        app:layout_constraintEnd_toEndOf="@+id/sp_payment_month"
+        app:layout_constraintStart_toStartOf="@+id/sp_payment_month" />
+
+    <EditText
+        android:id="@+id/txt_payment_date"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Fecha"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/sp_payment_month"
+        app:layout_constraintStart_toStartOf="@+id/sp_payment_month"
+        app:layout_constraintTop_toBottomOf="@+id/sp_payment_month" />
+
+    <TextView
+        android:id="@+id/tv_payment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        app:layout_constraintBottom_toTopOf="@+id/txt_payment_date"
+        app:layout_constraintEnd_toEndOf="@+id/txt_payment_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_payment_date" />
+
+    <EditText
+        android:id="@+id/txt_payment_amount"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Monto"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="@+id/txt_payment_date"
+        app:layout_constraintStart_toStartOf="@+id/txt_payment_date"
+        app:layout_constraintTop_toBottomOf="@+id/txt_payment_date" />
+
+    <TextView
+        android:id="@+id/tv_payment_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monto"
+        app:layout_constraintBottom_toTopOf="@+id/txt_payment_amount"
+        app:layout_constraintEnd_toEndOf="@+id/txt_payment_amount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_payment_amount" />
+
+    <CheckBox
+        android:id="@+id/cb_payment_cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Pago en efectivo"
+        app:layout_constraintEnd_toEndOf="@+id/txt_payment_amount"
+        app:layout_constraintStart_toStartOf="@+id/txt_payment_amount"
+        app:layout_constraintTop_toBottomOf="@+id/txt_payment_amount" />
+
+    <CheckBox
+        android:id="@+id/cb_payment_late"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Pago atrasado"
+        app:layout_constraintEnd_toEndOf="@+id/cb_payment_cash"
+        app:layout_constraintStart_toStartOf="@+id/cb_payment_cash"
+        app:layout_constraintTop_toBottomOf="@+id/cb_payment_cash" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

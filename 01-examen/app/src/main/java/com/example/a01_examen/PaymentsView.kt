@@ -62,7 +62,7 @@ class PaymentsView : AppCompatActivity() {
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater = menuInflater
-        inflater.inflate(R.menu.menu_client, menu)
+        inflater.inflate(R.menu.menu_payment, menu)
         //Get ID of selected payment
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
         idItemSelected = info.position
@@ -89,6 +89,7 @@ class PaymentsView : AppCompatActivity() {
         val intent = Intent(this, classToOpen)
         intent.putExtra("create", create)
         intent.putExtra("idItemSelected", idItemSelected)
+        intent.putExtra("idClient", idClient)
         startActivity(intent)
     }
 
