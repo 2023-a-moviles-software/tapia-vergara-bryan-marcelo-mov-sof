@@ -92,7 +92,6 @@ class PaymentsView : AppCompatActivity() {
             }
             R.id.mi_payment_delete ->{
                 deleteDialog()
-                showSnackbar("Pago eliminado")
                 return true
             }
             else -> super.onContextItemSelected(item)
