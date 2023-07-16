@@ -1,5 +1,6 @@
 package com.example.a01_examen
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,9 +11,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.example.a01_examen.dao.ClientDAO
 import com.example.a01_examen.models.Client
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     var idItemSelected = 0
@@ -20,6 +23,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var listViewClients: ListView
     lateinit var adapter : ArrayAdapter<Client>
 
+    val callback = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+            result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            if(result.data != null){
+                //Lógica negocio
+                val data = result.data
+                showSnackbar("${data?.getStringExtra("message")}")
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +101,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, classToOpen)
         intent.putExtra("create", create)
         intent.putExtra("idItemSelected", idItemSelected)
-        startActivity(intent)
+        callback.launch(intent)
+        //startActivity(intent)
     }
 
     fun openActivityPayments(
@@ -103,11 +119,17 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("¿Desea eliminar el cliente ${client.name}?")
         builder.setPositiveButton("Aceptar") { dialog, which ->
             ClientDAO.getInstance().delete(client.id!!)
+            showSnackbar("Cliente eliminado")
             adapter.notifyDataSetChanged()
         }
         builder.setNegativeButton("Cancelar", null)
         val dialog = builder.create()
         dialog.show()
+    }
+
+    fun showSnackbar(text: String){
+        Snackbar.make(findViewById(R.id.cl_clients),text, Snackbar.LENGTH_LONG)
+            .setAction("Action",null).show()
     }
 }
 

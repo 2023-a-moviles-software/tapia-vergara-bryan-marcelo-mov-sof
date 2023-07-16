@@ -1,5 +1,6 @@
 package com.example.a01_examen
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -34,7 +35,8 @@ class CreateEditClient : AppCompatActivity() {
                 client.isPreferential = preferential.isChecked
 
                 ClientDAO.getInstance().create(client)
-                finish()
+                returnMessage("Cliente creado")
+                //finish()
             }
         }else{
             val client = ClientDAO.getInstance().getAll()[intent.getIntExtra("idItemSelected", 0)]
@@ -54,8 +56,19 @@ class CreateEditClient : AppCompatActivity() {
                 client.isPreferential = preferential.isChecked
 
                 ClientDAO.getInstance().update(client)
-                finish()
+                returnMessage("Cliente actualizado")
+                //finish()
             }
         }
+    }
+
+    fun returnMessage(message: String){
+        val intent = Intent()
+        intent.putExtra("message", message)
+        setResult(
+            RESULT_OK,
+            intent
+        )
+        finish()
     }
 }

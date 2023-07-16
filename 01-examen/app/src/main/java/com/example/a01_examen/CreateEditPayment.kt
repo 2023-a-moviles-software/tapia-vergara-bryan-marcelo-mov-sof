@@ -2,6 +2,7 @@ package com.example.a01_examen
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a01_examen.dao.PaymentDAO
 import com.example.a01_examen.models.Payment
+import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 import java.util.Calendar
 
@@ -44,12 +46,19 @@ class CreateEditPayment : AppCompatActivity() {
 
                 payment.month = month.selectedItem.toString()
                 payment.date = LocalDate.parse(date.text.toString())
-                payment.amount = amount.text.toString().toDouble()
+
                 payment.inCash = inCash.isChecked
                 payment.isLate = isLate.isChecked
+                if(amount.text.toString() == ""){
+                    //payment.amount = 0.0
+                    showSnackbar("Debe ingresar un monto")
+                }else{
+                    payment.amount = amount.text.toString().toDouble()
+                    PaymentDAO.getInstance().create(payment, idClient)
+                    //finish()
+                    returnMessage("Pago creado")
+                }
 
-                PaymentDAO.getInstance().create(payment, idClient)
-                finish()
             }
         }else{
             val payment = PaymentDAO.getInstance().getAllByClient(idClient)[intent.getIntExtra("idItemSelected", 0)]
@@ -69,7 +78,8 @@ class CreateEditPayment : AppCompatActivity() {
                 payment.isLate = isLate.isChecked
 
                 PaymentDAO.getInstance().update(payment, idClient)
-                finish()
+                //finish()
+                returnMessage("Pago actualizado")
             }
         }
     }
@@ -98,5 +108,20 @@ class CreateEditPayment : AppCompatActivity() {
 
     fun openDatePicker(view: View?) {
         datePickerDialog!!.show()
+    }
+
+    fun returnMessage(message: String){
+        val intent = Intent()
+        intent.putExtra("message", message)
+        setResult(
+            RESULT_OK,
+            intent
+        )
+        finish()
+    }
+
+    fun showSnackbar(text: String){
+        Snackbar.make(findViewById(R.id.cl_payment_create_edit),text, Snackbar.LENGTH_LONG)
+            .setAction("Action",null).show()
     }
 }

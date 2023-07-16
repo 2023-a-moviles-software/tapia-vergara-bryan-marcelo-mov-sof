@@ -22,6 +22,20 @@ class DataBaseMemory {
                     )
                 )
             )
+            clients.add(
+                Client(
+                    1,
+                    "0501591267",
+                    "Marcelo Tapia",
+                    "0999219312",
+                    "Quito",
+                    true,
+                    arrayListOf(
+                        Payment(0, "Enero", LocalDate.parse("2021-01-01"), 50.0, true, true),
+                        Payment(1, "Febrero", LocalDate.parse("2021-02-01"), 50.0, false, false)
+                    )
+                )
+            )
         }
     }
 }

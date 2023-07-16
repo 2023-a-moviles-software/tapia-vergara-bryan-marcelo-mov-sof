@@ -1,5 +1,6 @@
 package com.example.a01_examen
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,10 +11,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.example.a01_examen.dao.ClientDAO
 import com.example.a01_examen.dao.PaymentDAO
 import com.example.a01_examen.models.Payment
+import com.google.android.material.snackbar.Snackbar
 
 class PaymentsView : AppCompatActivity() {
     var idItemSelected = 0
@@ -21,6 +24,19 @@ class PaymentsView : AppCompatActivity() {
 
     lateinit var listViewPayments: ListView
     lateinit var adapter : ArrayAdapter<Payment>
+
+    val callback = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+            result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            if(result.data != null){
+                //Lógica negocio
+                val data = result.data
+                showSnackbar("${data?.getStringExtra("message")}")
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +92,7 @@ class PaymentsView : AppCompatActivity() {
             }
             R.id.mi_payment_delete ->{
                 deleteDialog()
+                showSnackbar("Pago eliminado")
                 return true
             }
             else -> super.onContextItemSelected(item)
@@ -90,7 +107,8 @@ class PaymentsView : AppCompatActivity() {
         intent.putExtra("create", create)
         intent.putExtra("idItemSelected", idItemSelected)
         intent.putExtra("idClient", idClient)
-        startActivity(intent)
+        callback.launch(intent)
+        //startActivity(intent)
     }
 
     fun deleteDialog(){
@@ -99,10 +117,16 @@ class PaymentsView : AppCompatActivity() {
         builder.setTitle("¿Desea eliminar el pago ${payment.id}?")
         builder.setPositiveButton("Aceptar") { dialog, which ->
             PaymentDAO.getInstance().delete(payment.id!!, idClient)
+            showSnackbar("Pago eliminado")
             adapter.notifyDataSetChanged()
         }
         builder.setNegativeButton("Cancelar", null)
         val dialog = builder.create()
         dialog.show()
+    }
+
+    fun showSnackbar(text: String){
+        Snackbar.make(findViewById(R.id.cl_payments),text, Snackbar.LENGTH_LONG)
+            .setAction("Action",null).show()
     }
 }
