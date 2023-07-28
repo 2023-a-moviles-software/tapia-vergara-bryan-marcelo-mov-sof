@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "853017707397",
+    "project_id": "a-moviles-software-4aec1",
+    "storage_bucket": "a-moviles-software-4aec1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853017707397:android:2b14182ce1cfdea10d3aec",
+        "android_client_info": {
+          "package_name": "com.example.a01_android_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_4xglyh4kk0dJrwdgZTCqzspSaiL0y_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853017707397:android:11f979d1348a150a0d3aec",
+        "android_client_info": {
+          "package_name": "com.example.moviles01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_4xglyh4kk0dJrwdgZTCqzspSaiL0y_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

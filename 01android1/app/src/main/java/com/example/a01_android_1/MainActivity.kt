@@ -1,5 +1,6 @@
 package com.example.a01_android_1
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -88,6 +90,16 @@ class MainActivity : AppCompatActivity() {
         val botonRView = findViewById<Button>(R.id.btn_recycler_view)
         botonRView.setOnClickListener {
             irActividad(FRecyclerView::class.java)
+        }
+
+        val botonGoogleMaps = findViewById<Button>(R.id.btn_google_maps)
+        botonGoogleMaps.setOnClickListener {
+            irActividad(GGoogleMaps::class.java)
+        }
+
+        val botonUIAuth = findViewById<Button>(R.id.btn_intent_firebase_ui)
+        botonUIAuth.setOnClickListener {
+            irActividad(HFirebaseUIAuth::class.java)
         }
     }
 
