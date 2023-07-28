@@ -32,13 +32,13 @@
             android:id="@+id/arrow_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_keyboard_arrow_down_24"
+            android:src="@drawable/ic_arrow_down"
             android:background="@color/primary"/>
         <ImageButton
             android:id="@+id/notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_notifications_none_24"
+            android:src="@drawable/ic_notification"
             android:background="@color/primary"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end" />
@@ -48,7 +48,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/primary"
+        android:background="@color/white"
         android:padding="0dp"
         app:contentInsetStart="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/primary"
-                    android:src="@drawable/home_48px" />
+                    android:src="@drawable/ic_home" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/primary"
-                    android:src="@drawable/percent_48px" />
+                    android:src="@drawable/ic_percent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/primary"
-                    android:src="@drawable/receipt_48px" />
+                    android:src="@drawable/ic_receipt" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/primary"
-                    android:src="@drawable/person_48px" />
+                    android:src="@drawable/ic_person" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -155,14 +155,14 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
-        android:layout_height="639dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_top"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/tb_top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -204,7 +204,7 @@
                     android:background="@color/secondary"
                     android:padding="5dp"
                     android:scaleX="-1"
-                    android:src="@drawable/baseline_search_24" />
+                    android:src="@drawable/ic_search" />
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.appcompat.widget.Toolbar
@@ -215,11 +215,11 @@
                 android:background="@drawable/rounded_element"
                 android:backgroundTint="@color/black">
 
-                <ImageButton
+                <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/pedidosya" />
+                    android:src="@drawable/logo_pedidosya" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -247,7 +247,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/baseline_arrow_forward_ios_24" />
+                    android:src="@drawable/ic_arrow_forward" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -279,14 +279,14 @@
                             android:text="Restaurantes"
                             android:textColor="@android:color/black"
                             android:textSize="12sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
-                        <ImageButton
+                        <ImageView
                             android:layout_width="110dp"
                             android:layout_height="110dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/pedidosya" />
+                            android:src="@drawable/img_hamburguer" />
                     </LinearLayout>
 
                 </androidx.appcompat.widget.Toolbar>
@@ -318,14 +318,15 @@
                                 android:text="PedidosYa\nMarket"
                                 android:textColor="@android:color/white"
                                 android:textSize="12sp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold" />
 
-                            <ImageButton
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:layout_marginStart="50dp"
+                            <ImageView
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_marginStart="60dp"
+                                android:layout_marginTop="4dp"
                                 android:background="@android:color/transparent"
-                                android:src="@drawable/pedidosya" />
+                                android:src="@drawable/img_basket" />
                         </LinearLayout>
                     </androidx.appcompat.widget.Toolbar>
 
@@ -346,7 +347,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="center_vertical"
+                                android:gravity="bottom"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -356,15 +357,17 @@
                                     android:text="Supermercados"
                                     android:textColor="@android:color/black"
                                     android:textSize="12sp"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
-                                <ImageButton
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginStart="40dp"
-                                    android:layout_marginTop="5dp"
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="1dp"
                                     android:background="@android:color/transparent"
-                                    android:src="@drawable/pedidosya" />
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/img_market" />
                             </LinearLayout>
                         </androidx.appcompat.widget.Toolbar>
 
@@ -381,7 +384,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="center_vertical"
+                                android:gravity="bottom"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -391,15 +394,15 @@
                                     android:text="Bebidas"
                                     android:textColor="@android:color/black"
                                     android:textSize="12sp"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
-                                <ImageButton
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginStart="40dp"
-                                    android:layout_marginTop="5dp"
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginTop="15dp"
                                     android:background="@android:color/transparent"
-                                    android:src="@drawable/pedidosya" />
+                                    android:src="@drawable/img_drinks" />
                             </LinearLayout>
                         </androidx.appcompat.widget.Toolbar>
                     </LinearLayout>
@@ -413,26 +416,26 @@
                 android:id="@+id/rv_store_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="16dp" />
+                android:layout_marginStart="16dp"
+                android:orientation="horizontal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
+                android:text="Los más pedidos esta semana"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="20sp"
-                android:text="Los más pedidos esta semana"/>
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_most_requested"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="16dp" />
+                android:layout_marginStart="16dp"
+                android:orientation="horizontal" />
 
 
         </LinearLayout>

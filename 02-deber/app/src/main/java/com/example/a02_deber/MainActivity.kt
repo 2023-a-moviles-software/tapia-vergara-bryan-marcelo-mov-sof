@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a02_deber.database.DataBaseMemory
+import com.example.a02_deber.models.Restaurant
 
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initRVStoreType()
-        initRVRestaurant()
+        initRVRestaurant(R.id.rv_most_requested, arregloRestaurants)
+
     }
 
     fun initRVStoreType(){
@@ -31,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    fun initRVRestaurant(){
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_most_requested)
+    fun initRVRestaurant(reference: Int, arreglo: List<Restaurant>){
+        val recyclerView = findViewById<RecyclerView>(reference)
         val adapter = RVAdapterRestaurant(
             this,
-            arregloRestaurants,
+            arreglo,
             recyclerView
         )
         recyclerView.adapter = adapter
