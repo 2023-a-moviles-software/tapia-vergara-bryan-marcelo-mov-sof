@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp">
@@ -12,9 +11,10 @@
         android:layout_height="170dp"
         android:background="@drawable/rounded_toolbar_bg"
         app:contentInsetStart="0dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,9 +23,11 @@
 
             <ImageView
                 android:id="@+id/iv_image_restaurant"
-                android:layout_width="match_parent"
+                android:layout_width="298dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"/>
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:scaleType="centerCrop" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -35,9 +37,10 @@
                     android:id="@+id/iv_logo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/rounded_element"
-                    android:src="@drawable/logo_pedidosya"
                     android:layout_marginStart="10dp"
+                    android:background="@drawable/rounded_element"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_pedidosya"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
