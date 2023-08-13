@@ -19,7 +19,7 @@ import com.example.a03_deber.database.DataBase
 import com.example.a03_deber.models.Client
 import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity() {
+class ClientsView : AppCompatActivity() {
     var idItemSelected = 0
 
     lateinit var listViewClients: ListView
