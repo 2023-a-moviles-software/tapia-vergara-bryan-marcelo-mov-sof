@@ -40,7 +40,7 @@ class ClientsView : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_clients_view)
 
         //Base de datos sqlite
         DataBase.tableClient = ClientDAO(this)
