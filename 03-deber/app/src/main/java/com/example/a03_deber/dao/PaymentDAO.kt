@@ -26,22 +26,14 @@ class PaymentDAO(
 
     fun getAllByClient(idClient: Int): ArrayList<Payment>{
         val dbRead = readableDatabase
-        /*val scriptRead = """
+
+        val scriptRead = """
             SELECT * FROM PAYMENT WHERE clientId = ?
             """.trimIndent()
         val parameters = arrayOf(idClient.toString())
         val resultRead = dbRead.rawQuery(
             scriptRead,
             parameters
-        )*/
-
-        val scriptRead = """
-            SELECT * FROM PAYMENT
-            """.trimIndent()
-        val parameters = arrayOf(idClient.toString())
-        val resultRead = dbRead.rawQuery(
-            scriptRead,
-            null
         )
 
         val paymentExists = resultRead.moveToFirst()
