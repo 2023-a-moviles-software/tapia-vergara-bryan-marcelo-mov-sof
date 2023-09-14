@@ -115,7 +115,9 @@ class PaymentsView : AppCompatActivity() {
         val payment =Database.listPayments[idItemSelected]
         builder.setTitle("¿Desea eliminar el pago ${payment.id}?")
         builder.setPositiveButton("Aceptar") { dialog, which ->
+            val payment = Database.listPayments.removeAt(idItemSelected)
             delete(payment.id!!, idClient.toString())
+
             onResume()
         }
         builder.setNegativeButton("Cancelar", null)
