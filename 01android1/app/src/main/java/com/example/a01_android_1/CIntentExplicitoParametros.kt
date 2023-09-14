@@ -14,6 +14,8 @@ class CIntentExplicitoParametros : AppCompatActivity() {
         val edad: Int = intent.getIntExtra("edad", 0)
         val boton = findViewById<Button>(R.id.btn_devolver_respuesta)
         boton.setOnClickListener { devolverRespuesta() }
+
+        val entrenador: BEntrenador? = intent.getParcelableExtra("entrenador")
     }
 
     fun devolverRespuesta(){
