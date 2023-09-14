@@ -1,4 +1,4 @@
-package com.example.a03_deber.models
+package com.example.a02_examen.models
 
 import java.time.LocalDate
 

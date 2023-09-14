@@ -13,9 +13,12 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.example.a03_deber.database.DataBase
-import com.example.a03_deber.models.Payment
+import com.example.a02_examen.database.Database
+import com.example.a02_examen.models.Payment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
 
 class PaymentsView : AppCompatActivity() {
     var idItemSelected = 0
@@ -30,7 +33,7 @@ class PaymentsView : AppCompatActivity() {
             result ->
         if(result.resultCode == Activity.RESULT_OK){
             if(result.data != null){
-                //Lógica negocio
+                //Database.listPayments.clear()
                 val data = result.data
                 showSnackbar("${data?.getStringExtra("message")}")
             }
@@ -41,10 +44,8 @@ class PaymentsView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payments_view)
 
-        val client = DataBase.tableClient!!.getAll()[intent.getIntExtra("idItemSelected", 0)]
+        val client = Database.listClients[intent.getIntExtra("idItemSelected", 0)]
         idClient = client.id!!
-
-        //val payments = DataBase.tablePayment!!.getAllByClient(idClient)
 
         //Create
         val buttonCreatePayment = findViewById<Button>(R.id.btn_create_payment)
@@ -57,7 +58,7 @@ class PaymentsView : AppCompatActivity() {
         adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            DataBase.tablePayment!!.getAllByClient(idClient)
+            Database.listPayments
         )
         listViewPayments.adapter = adapter
         adapter.notifyDataSetChanged()
@@ -67,9 +68,7 @@ class PaymentsView : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        adapter.clear()
-        adapter.addAll(DataBase.tablePayment!!.getAllByClient(idClient))
-        adapter.notifyDataSetChanged()
+        getAllByClient(idClient.toString())
     }
 
     override fun onCreateContextMenu(
@@ -113,15 +112,10 @@ class PaymentsView : AppCompatActivity() {
 
     fun deleteDialog(){
         val builder = AlertDialog.Builder(this)
-        val payment = DataBase.tablePayment!!.getAllByClient(idClient)[idItemSelected]
+        val payment =Database.listPayments[idItemSelected]
         builder.setTitle("¿Desea eliminar el pago ${payment.id}?")
         builder.setPositiveButton("Aceptar") { dialog, which ->
-            val deleted = DataBase.tablePayment!!.delete(payment.id!!)
-            if (deleted){
-                showSnackbar("Pago eliminado")
-            }else{
-                showSnackbar("Error al eliminar el pago")
-            }
+            delete(payment.id!!, idClient.toString())
             onResume()
         }
         builder.setNegativeButton("Cancelar", null)
@@ -132,5 +126,35 @@ class PaymentsView : AppCompatActivity() {
     fun showSnackbar(text: String){
         Snackbar.make(findViewById(R.id.cl_payments),text, Snackbar.LENGTH_LONG)
             .setAction("Action",null).show()
+    }
+
+    fun getAllByClient(idClient: String){
+        val db = Firebase.firestore
+        val payments = db.collection("clients").document(idClient.toString()).collection("payments")
+        Database.listPayments.clear()
+        payments.get()
+            .addOnSuccessListener { result ->
+                for (queryDocumentSnapshot in result){
+                    val payment = Payment()
+                    payment.id = queryDocumentSnapshot.data["id"].toString().toInt()
+                    payment.month = queryDocumentSnapshot.data["month"].toString()
+                    payment.date = LocalDate.parse(queryDocumentSnapshot.data["date"].toString())
+                    payment.amount = queryDocumentSnapshot.data["amount"].toString().toDouble()
+                    payment.inCash = queryDocumentSnapshot.data["inCash"].toString().toBoolean()
+                    payment.isLate = queryDocumentSnapshot.data["isLate"].toString().toBoolean()
+                    Database.listPayments.add(payment)
+                }
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {  }
+    }
+
+    fun delete(id: Int, idClient: String){
+        val db = Firebase.firestore
+        val payments = db.collection("clients").document(idClient).collection("payments")
+        payments.document(id.toString())
+            .delete()
+            .addOnSuccessListener { showSnackbar("Pago eliminado") }
+            .addOnFailureListener { showSnackbar("Error al eliminar el pago") }
     }
 }

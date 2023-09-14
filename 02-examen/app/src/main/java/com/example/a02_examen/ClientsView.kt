@@ -13,14 +13,15 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.example.a03_deber.dao.ClientDAO
-import com.example.a03_deber.dao.PaymentDAO
-import com.example.a03_deber.database.DataBase
-import com.example.a03_deber.models.Client
+import com.example.a02_examen.database.Database
+import com.example.a02_examen.models.Client
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ClientsView : AppCompatActivity() {
     var idItemSelected = 0
+    //val listClients = ArrayList<Client>()
 
     lateinit var listViewClients: ListView
     lateinit var adapter : ArrayAdapter<Client>
@@ -42,10 +43,6 @@ class ClientsView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clients_view)
 
-        //Base de datos sqlite
-        DataBase.tableClient = ClientDAO(this)
-        DataBase.tablePayment = PaymentDAO(this)
-
         //Create
         val buttonCreateClient = findViewById<Button>(R.id.btn_create_client)
         buttonCreateClient.setOnClickListener {
@@ -57,7 +54,7 @@ class ClientsView : AppCompatActivity() {
         adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            DataBase.tableClient!!.getAll()
+            Database.listClients
         )
         listViewClients.adapter = adapter
         adapter.notifyDataSetChanged()
@@ -98,9 +95,7 @@ class ClientsView : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        adapter.clear()
-        adapter.addAll(DataBase.tableClient!!.getAll())
-        adapter.notifyDataSetChanged()
+        getAll()
     }
 
     fun openActivityCreateEdit(
@@ -118,23 +113,20 @@ class ClientsView : AppCompatActivity() {
         classToOpen: Class<*>
     ){
         val intent = Intent(this, classToOpen)
+
+        //val client = Database.listClients[idItemSelected]
         intent.putExtra("idItemSelected", idItemSelected)
         startActivity(intent)
     }
 
     fun deleteDialog(){
         val builder = AlertDialog.Builder(this)
-        val client = DataBase.tableClient!!.getAll()[idItemSelected]
-        //val client = ClientDAO.getInstance().getAll()[idItemSelected]
+        val client = Database.listClients[idItemSelected]
         builder.setTitle("¿Desea eliminar el cliente ${client.name}?")
         builder.setPositiveButton("Aceptar") { dialog, which ->
-            val deleted = DataBase.tableClient!!.delete(client.id!!)
-            if(deleted){
-                showSnackbar("Cliente eliminado")
-            }else{
-                showSnackbar("Error al eliminar el cliente")
-            }
-            onResume()
+            val client = Database.listClients.removeAt(idItemSelected)
+            adapter.notifyDataSetChanged()
+            delete(client.id!!)
         }
         builder.setNegativeButton("Cancelar", null)
         val dialog = builder.create()
@@ -144,5 +136,39 @@ class ClientsView : AppCompatActivity() {
     fun showSnackbar(text: String){
         Snackbar.make(findViewById(R.id.cl_clients),text, Snackbar.LENGTH_LONG)
             .setAction("Action",null).show()
+    }
+
+    fun getAll(){
+        val db = Firebase.firestore
+        val clients = db.collection("clients")
+        Database.listClients.clear()
+        clients.get()
+            .addOnSuccessListener { result ->
+                for (queryDocumentSnapshot in result){
+                    val client = Client()
+                    client.id = queryDocumentSnapshot.data["id"].toString().toInt()
+                    client.name = queryDocumentSnapshot.data["name"].toString()
+                    client.identificationCard = queryDocumentSnapshot.data["identificationCard"].toString()
+                    client.phone = queryDocumentSnapshot.data["phone"].toString()
+                    client.residence = queryDocumentSnapshot.data["residence"].toString()
+                    client.isPreferential = queryDocumentSnapshot.data["isPreferential"].toString().toBoolean()
+                    Database.listClients.add(client)
+                }
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {  }
+    }
+
+    fun delete(id: Int){
+        val db = Firebase.firestore
+        val clients = db.collection("clients")
+        clients.document(id.toString())
+            .delete()
+            .addOnSuccessListener {
+                showSnackbar("Cliente eliminado")
+            }
+            .addOnFailureListener {
+                showSnackbar("Error al eliminar el cliente")
+            }
     }
 }

@@ -11,22 +11,26 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import com.example.a03_deber.database.DataBase
-import com.example.a03_deber.models.Payment
+import com.example.a02_examen.database.Database
+import com.example.a02_examen.models.Payment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.util.Calendar
 
 class CreateEditPayment : AppCompatActivity() {
     private var datePickerDialog: DatePickerDialog? = null
     lateinit var date: Button
+    var create:Boolean = true
+    var idClient: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_edit_payment)
 
-        val create = intent.getBooleanExtra("create", true)
-        val idClient = intent.getIntExtra("idClient", 0)
+        create = intent.getBooleanExtra("create", true)
+        idClient = intent.getIntExtra("idClient", 0)
 
         val title = findViewById<TextView>(R.id.tv_payment_title)
         val month = findViewById<Spinner>(R.id.sp_payment_month)
@@ -42,27 +46,22 @@ class CreateEditPayment : AppCompatActivity() {
         if (create) {
             buttonCreateEditPayment.setOnClickListener {
                 val payment = Payment()
-
+                payment.id = (System.currentTimeMillis() % 10000).toInt()
                 payment.month = month.selectedItem.toString()
                 payment.date = LocalDate.parse(date.text.toString())
-
                 payment.inCash = inCash.isChecked
                 payment.isLate = isLate.isChecked
+
                 if(amount.text.toString() == ""){
-                    //payment.amount = 0.0
                     showSnackbar("Debe ingresar un monto")
                 }else{
                     payment.amount = amount.text.toString().toDouble()
-                    val created = DataBase.tablePayment!!.create(payment, idClient)
-                    if (created){
-                        returnMessage("Pago creado")
-                    }else{
-                        returnMessage("Error al crear el pago")
-                    }
+                    Database.listPayments.add(payment)
+                    createOrUpdate(payment, idClient)
                 }
             }
         }else{
-            val payment = DataBase.tablePayment!!.getAllByClient(idClient)[intent.getIntExtra("idItemSelected", 0)]
+            val payment = Database.listPayments[intent.getIntExtra("idItemSelected", 0)]
             title.text = "Editar el pago del mes: ${payment.month}"
             buttonCreateEditPayment.text = "Actualizar"
             month.setSelection(resources.getStringArray(R.array.months).indexOf(payment.month))
@@ -78,12 +77,8 @@ class CreateEditPayment : AppCompatActivity() {
                 payment.inCash = inCash.isChecked
                 payment.isLate = isLate.isChecked
 
-                val updated = DataBase.tablePayment!!.update(payment)
-                if (updated){
-                    returnMessage("Pago actualizado")
-                }else{
-                    returnMessage("Error al actualizar el pago")
-                }
+                Database.listPayments[intent.getIntExtra("idItemSelected", 0)] = payment
+                createOrUpdate(payment, idClient)
             }
         }
     }
@@ -127,5 +122,35 @@ class CreateEditPayment : AppCompatActivity() {
     fun showSnackbar(text: String){
         Snackbar.make(findViewById(R.id.cl_payment_create_edit),text, Snackbar.LENGTH_LONG)
             .setAction("Action",null).show()
+    }
+
+    fun createOrUpdate(payment: Payment, idClient: Int): Boolean{
+        val db = Firebase.firestore
+        val payments = db.collection("clients").document(idClient.toString()).collection("payments")
+        val data = hashMapOf(
+            "id" to payment.id,
+            "month" to payment.month,
+            "date" to payment.date.toString(),
+            "amount" to payment.amount,
+            "inCash" to payment.inCash,
+            "isLate" to payment.isLate
+        )
+        payments.document(payment.id.toString())
+            .set(data)
+            .addOnSuccessListener {
+                if (create){
+                    returnMessage("Pago creado")
+                }else{
+                    returnMessage("Pago actualizado")
+                }
+            }
+            .addOnFailureListener {
+                if (create){
+                    returnMessage("Error al crear el pago")
+                }else{
+                    returnMessage("Error al actualizar el pago")
+                }
+            }
+        return true
     }
 }

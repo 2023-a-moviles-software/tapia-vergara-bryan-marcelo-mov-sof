@@ -7,15 +7,19 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
-import com.example.a03_deber.database.DataBase
-import com.example.a03_deber.models.Client
+import com.example.a02_examen.database.Database
+import com.example.a02_examen.models.Client
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CreateEditClient : AppCompatActivity() {
+
+    var create:Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_edit_client)
 
-        val create:Boolean = intent.getBooleanExtra("create", true)
+        create = intent.getBooleanExtra("create", true)
 
         val title = findViewById<TextView>(R.id.tv_client_title)
         val name = findViewById<EditText>(R.id.txt_client_name)
@@ -28,23 +32,21 @@ class CreateEditClient : AppCompatActivity() {
         if (create){
             buttonCreateEditClient.setOnClickListener {
                 val client = Client()
+                client.id = (System.currentTimeMillis() % 10000).toInt()
                 client.name = name.text.toString()
                 client.identificationCard = idCard.text.toString()
                 client.phone = phone.text.toString()
                 client.residence = residence.text.toString()
                 client.isPreferential = preferential.isChecked
 
-                val created = DataBase.tableClient!!.create(client)
-                if (created){
-                    returnMessage("Cliente creado")
-                }else{
-                    returnMessage("Error al crear el cliente")
-                }
+                Database.listClients.add(client)
+                createOrUpdate(client)
             }
         }else{
-            val client = DataBase.tableClient!!.getAll()[intent.getIntExtra("idItemSelected", 0)]
-            title.text = "Editar el cliente: ${client.name}"
+            val client = Database.listClients[intent.getIntExtra("idItemSelected", 0)]
             buttonCreateEditClient.text = "Actualizar"
+
+            title.text = "Editar el cliente: ${client.name}"
             name.setText(client.name)
             idCard.setText(client.identificationCard)
             phone.setText(client.phone)
@@ -58,12 +60,9 @@ class CreateEditClient : AppCompatActivity() {
                 client.residence = residence.text.toString()
                 client.isPreferential = preferential.isChecked
 
-                val updated = DataBase.tableClient!!.update(client)
-                if(updated){
-                    returnMessage("Cliente actualizado")
-                }else{
-                    returnMessage("Error al actualizar el cliente")
-                }
+                Database.listClients[intent.getIntExtra("idItemSelected", 0)] = client
+                createOrUpdate(client)
+
             }
         }
     }
@@ -76,5 +75,35 @@ class CreateEditClient : AppCompatActivity() {
             intent
         )
         finish()
+    }
+
+    fun createOrUpdate(client: Client){
+        val db = Firebase.firestore
+        val clients = db.collection("clients")
+
+        val data = hashMapOf(
+            "id" to client.id,
+            "identificationCard" to client.identificationCard,
+            "name" to client.name,
+            "phone" to client.phone,
+            "residence" to client.residence,
+            "isPreferential" to client.isPreferential
+        )
+        clients.document(client.id.toString())
+            .set(data)
+            .addOnSuccessListener {
+                if (create){
+                    returnMessage("Cliente creado")
+                }else{
+                    returnMessage("Cliente actualizado")
+                }
+            }
+            .addOnFailureListener {
+                if (create){
+                    returnMessage("Error al crear el cliente")
+                }else{
+                    returnMessage("Error al actualizar el cliente")
+                }
+            }
     }
 }
